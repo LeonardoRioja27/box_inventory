@@ -212,34 +212,10 @@ class _LiveCameraScreenState
         createInputImage(
           CameraImage image,
         ) async {
-
-          if (captureBusy) {
+            
             return null;
           }
 
-          captureBusy = true;
-
-          try {
-
-            final file =
-                await _cameraService
-                    .capture();
-
-            if (file == null) {
-              return null;
-            }
-
-            return InputImage
-                .fromFilePath(
-              file.path,
-            );
-
-          } finally {
-
-            captureBusy = false;
-          }
-        }
-    
   @override
   void initState() {
     super.initState();
@@ -257,6 +233,37 @@ class _LiveCameraScreenState
 
           frameCounter++;
 
+          if (frameCounter == 1) {
+
+              debugPrint(
+                'FORMAT=${image.format.group}',
+              );
+
+              debugPrint(
+                'PLANES=${image.planes.length}',
+              );
+
+              debugPrint(
+                'WIDTH=${image.width}',
+              );
+
+              debugPrint(
+                'HEIGHT=${image.height}',
+              );
+
+              for (int i = 0;
+                  i < image.planes.length;
+                  i++) {
+
+                debugPrint(
+                  'PLANE $i '
+                  'BYTES_PER_ROW='
+                  '${image.planes[i].bytesPerRow}',
+                );
+              }
+            }
+        
+          
           if (frameCounter == 1) {
 
               print(
@@ -323,9 +330,9 @@ class _LiveCameraScreenState
                 
                 updateContacts();
                 
-                unawaited(
-                  updateOCR(image),
-                );
+                //unawaited(
+                //  updateOCR(image),
+                //);
                 
               });
 
