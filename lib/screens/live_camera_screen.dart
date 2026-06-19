@@ -213,40 +213,31 @@ class _LiveCameraScreenState
           CameraImage image,
         ) async {
 
-        if (captureBusy) {
-         return null;
-        }
-
-        captureBusy = true;
-
-        try {
-
-         final file =
-             await _cameraService
-                 .capture();
-
-         if (file == null) {
-           return null;
-         }
-
-         return InputImage
-             .fromFilePath(
-           file.path,
-         );
-
-        } finally {
-
-         captureBusy = false;
-        }
-
-          if (file == null) {
+          if (captureBusy) {
             return null;
           }
 
-          return InputImage
-              .fromFilePath(
-            file.path,
-          );
+          captureBusy = true;
+
+          try {
+
+            final file =
+                await _cameraService
+                    .capture();
+
+            if (file == null) {
+              return null;
+            }
+
+            return InputImage
+                .fromFilePath(
+              file.path,
+            );
+
+          } finally {
+
+            captureBusy = false;
+          }
         }
     
   @override
@@ -266,6 +257,29 @@ class _LiveCameraScreenState
 
           frameCounter++;
 
+          if (frameCounter == 1) {
+
+              print(
+                'FORMAT: '
+                '${image.format.group}',
+              );
+
+              print(
+                'PLANES: '
+                '${image.planes.length}',
+              );
+
+              print(
+                'WIDTH: '
+                '${image.width}',
+              );
+
+              print(
+                'HEIGHT: '
+                '${image.height}',
+              );
+            }
+            
           if (frameCounter %
                   30 ==
               0) {
