@@ -227,10 +227,20 @@ class _LiveCameraScreenState
 
     await _cameraService.initialize();
   
+    debugPrint('STEP 1 CAMERA INITIALIZED');
+  
+    debugPrint(
+      'STEP 2 ABOUT TO START STREAM',
+    );
     await _cameraService
           .startImageStream(
         (image) {
-
+        
+            
+        debugPrint(
+            'STEP 3 STREAM CALLBACK',
+            );
+        
           frameCounter++;
 
           if (frameCounter == 1) {
@@ -293,6 +303,8 @@ class _LiveCameraScreenState
 
               setState(() {
 
+              debugPrint('STEP 4 SETSTATE');
+              
                 hands = [
 
                   HandDetection(
