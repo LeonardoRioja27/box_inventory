@@ -221,15 +221,37 @@ class _LiveCameraScreenState
 
   @override
   void initState() {
+
     super.initState();
-    debugPrint('LiveCameraScreen: initState() called, boxId=${widget.boxId}');
-    _initialize().catchError((Object e, StackTrace st) {
-      debugPrint('LiveCameraScreen: _initialize() FAILED: $e\n$st');
+
+    debugPrint(
+      'INITSTATE ENTERED',
+    );
+
+    _initialize()
+        .then((_) {
+
+      debugPrint(
+        'INITIALIZE COMPLETED',
+      );
+
+    }).catchError((e, s) {
+
+      debugPrint(
+        'INITIALIZE FAILED: $e',
+      );
+
+      debugPrint(
+        s.toString(),
+      );
     });
   }
 
   Future<void> _initialize() async {
-    debugPrint('LiveCameraScreen: _initialize() started');
+
+    debugPrint(
+      'INITIALIZE STARTED',
+    );
 
     await _cameraService.initialize();
 

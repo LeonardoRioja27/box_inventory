@@ -1,13 +1,38 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 
 void main() async {
-  throw Exception('MAIN EXECUTED');
+
   WidgetsFlutterBinding.ensureInitialized();
-  debugPrint('MAIN: WidgetsFlutterBinding initialized');
-  debugPrint('MAIN: calling runApp');
-  runApp(
-    const BoxInventoryApp(),
+
+  FlutterError.onError(
+    (details) {
+
+      FlutterError.dumpErrorToConsole(
+        details,
+      );
+    },
+  );
+
+  runZonedGuarded(
+    () {
+
+      runApp(
+        const BoxInventoryApp(),
+      );
+
+    },
+    (error, stack) {
+
+      debugPrint(
+        'UNCAUGHT ERROR: $error',
+      );
+
+      debugPrint(
+        stack.toString(),
+      );
+    },
   );
 }
 
@@ -20,7 +45,6 @@ class BoxInventoryApp
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('MAIN: BoxInventoryApp.build() called');
     return MaterialApp(
       debugShowCheckedModeBanner:
           false,
