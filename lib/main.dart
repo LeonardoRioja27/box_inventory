@@ -6,14 +6,13 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  FlutterError.onError(
-    (details) {
+  FlutterError.onError =
+      (FlutterErrorDetails details) {
 
-      FlutterError.dumpErrorToConsole(
-        details,
-      );
-    },
-  );
+        FlutterError.dumpErrorToConsole(
+          details,
+        );
+      };
 
   runZonedGuarded(
     () {
