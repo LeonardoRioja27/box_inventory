@@ -39,6 +39,9 @@ class LiveCameraScreen
 class _LiveCameraScreenState
     extends State<LiveCameraScreen> {
 
+  _LiveCameraScreenState() {
+    debugPrint('LiveCameraScreen: _LiveCameraScreenState constructor called');
+  }
 
   final CameraService
       _cameraService =
@@ -219,24 +222,26 @@ class _LiveCameraScreenState
   @override
   void initState() {
     super.initState();
-
-    _initialize();
+    debugPrint('LiveCameraScreen: initState() called, boxId=${widget.boxId}');
+    _initialize().catchError((Object e, StackTrace st) {
+      debugPrint('LiveCameraScreen: _initialize() FAILED: $e\n$st');
+    });
   }
 
   Future<void> _initialize() async {
+    debugPrint('LiveCameraScreen: _initialize() started');
 
     await _cameraService.initialize();
-  
+
     debugPrint('STEP 1 CAMERA INITIALIZED');
-  
+
     debugPrint(
       'STEP 2 ABOUT TO START STREAM',
     );
     await _cameraService
           .startImageStream(
         (image) {
-        
-            
+
         debugPrint(
             'STEP 3 STREAM CALLBACK',
             );
@@ -381,6 +386,7 @@ class _LiveCameraScreenState
   @override
   Widget build(
       BuildContext context) {
+    debugPrint('LiveCameraScreen: build() called, initialized=$initialized');
 
     return Scaffold(
       appBar: AppBar(

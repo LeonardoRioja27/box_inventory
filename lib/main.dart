@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  debugPrint('MAIN: WidgetsFlutterBinding initialized');
+  debugPrint('MAIN: calling runApp');
   runApp(
     const BoxInventoryApp(),
   );
@@ -16,7 +19,7 @@ class BoxInventoryApp
 
   @override
   Widget build(BuildContext context) {
-
+    debugPrint('MAIN: BoxInventoryApp.build() called');
     return MaterialApp(
       debugShowCheckedModeBanner:
           false,

@@ -1,20 +1,27 @@
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 
 class CameraService {
 
   CameraController? controller;
 
   Future<void> initialize() async {
-
+    debugPrint('CameraService.initialize(): calling availableCameras()');
     final cameras = await availableCameras();
+    debugPrint('CameraService.initialize(): found ${cameras.length} cameras');
 
     final camera =
         cameras.firstWhere(
       (c) =>
           c.lensDirection ==
           CameraLensDirection.back,
+      orElse: () {
+        debugPrint('CameraService.initialize(): no back camera, using first');
+        return cameras.first;
+      },
     );
 
+    debugPrint('CameraService.initialize(): creating CameraController');
     controller =
         CameraController(
       camera,
@@ -22,7 +29,9 @@ class CameraService {
       enableAudio: false,
     );
 
+    debugPrint('CameraService.initialize(): calling controller.initialize()');
     await controller!.initialize();
+    debugPrint('CameraService.initialize(): controller initialized successfully');
   }
 
 
@@ -56,13 +65,10 @@ class CameraService {
           callback);
     }
   
-  // I added this here, Idk
-    Future<void>
-        stopImageStream()
-        async {
-
-        await controller!
-            .stopImageStream();
-        }
+  Future<void> stopImageStream() async {
+    if (controller == null) return;
+    if (!controller!.value.isStreamingImages) return;
+    await controller!.stopImageStream();
+  }
   
 }
