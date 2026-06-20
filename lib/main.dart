@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 
 void main() async {
+  throw Exception('MAIN EXECUTED');
   WidgetsFlutterBinding.ensureInitialized();
   debugPrint('MAIN: WidgetsFlutterBinding initialized');
   debugPrint('MAIN: calling runApp');
